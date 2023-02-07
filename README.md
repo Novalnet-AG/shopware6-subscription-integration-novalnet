@@ -34,6 +34,15 @@ Conveniently keep track of recurring orders and their details under the ‘Recur
 
 For detailed documentation and other technical inquiries, please send us an email at <a href="mailto:sales@novalnet.de"> sales@novalnet.de </a>
 
+## Compatibility
+
+Shopware 6 Subscription plugin is compatible with below technical capabilities. 
+
+- [x]	Shopware versions 6.4.1.2 to Shopware 6.4.18.1
+- [x]	Linux based OS with Apache 2.2 or 2.4
+- [x]	PHP 7.2.0 or higher
+- [x]	MySQL 5.7 or higher
+
 ## Quick Installation via plugin upload
 
 1. **Download** the plugin from <a href="https://store.shopware.com/en/noval70530930939/subscriptions.html"> here</a> or <a href="https://www.novalnet.de/kontakt/sales"> contact us</a>.
