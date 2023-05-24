@@ -6,7 +6,7 @@ Once subscription payment mode is applied to a product/service, the customer can
 
 ### For Shop Admins
 -	Create and manage subscription plans
--   Configure subscription plans to one or more product(s)
+-  Configure subscription plans to one or more product(s)
 -	Manage customers’ subscription profiles
 -	Manual subscription cancellation from the admin panel 
 -	Enable or disable Trial Subscription payment mode (Trial Billing Amount, Trial Billing Cycle, and Initial Fee)
@@ -14,6 +14,7 @@ Once subscription payment mode is applied to a product/service, the customer can
 
 ### For Customers
 -	Customers can view and cancel their subscriptions from their dashboard
+-  Subscription management enhanced for suspend, reactivate and change next cycle date process
 
 ## Advanced Features for Shop Admin
 
