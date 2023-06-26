@@ -1,10 +1,10 @@
 *** Changelog ***
 
 = 1.3.1    - 26.06.2023
-* Fix - Products are accessible after activating the subscription plugin
+* Fix      - Subscription products are accessible after activating the subscription plugin
 
 = 1.3.1    - 21.06.2023
-* Fix - Compatibility for Shopware 6.5.0.0
+* Fix      - Compatibility for Shopware 6.5.0.0
 
 = 1.3.0    - 24.05.2023
 * New 	   - Implemented Apple Pay, Google Pay, Direct Debit SEPA with payment guarantee & Invoice with payment guarantee payments
