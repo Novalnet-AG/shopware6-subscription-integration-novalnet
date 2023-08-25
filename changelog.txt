@@ -1,5 +1,8 @@
 *** Changelog ***
 
+= 1.3.3    - 25.08.2023
+* Enhanced - Extended the plugin to support the Novalnet payment plugin version 13.0.0
+
 = 1.3.2    - 26.06.2023
 * Fix      - Subscription products are accessible after activating the subscription plugin
 
