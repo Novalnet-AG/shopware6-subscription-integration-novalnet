@@ -1,5 +1,11 @@
 *** Changelog ***
 
+= 2.0.0    - 29.08.2023
+* New      - Implemented Change payment method option
+* New      - Implemented Upgrade or Downgrade for Subscription products
+* Enhanced - Optimised the Subscription product variant settings
+* Enhanced - Discount feature has been handled for different subscription recurring
+
 = 1.3.3    - 25.08.2023
 * Enhanced - Extended the plugin to support the Novalnet payment plugin version 13.0.0
 
