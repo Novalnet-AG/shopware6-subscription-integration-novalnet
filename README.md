@@ -10,7 +10,10 @@ Once subscription payment mode is applied to a product/service, the customer can
 -	Manage customers’ subscription profiles
 -	Manual subscription cancellation from the admin panel 
 -	Enable or disable Trial Subscription payment mode (Trial Billing Amount, Trial Billing Cycle, and Initial Fee)
--	Accept recurring payments for Shopware 6 shop system
+-	Accept recurring payments for the Shopware 6 shop system
+-	Handled changing payment methods in the admin panel
+-  Subscription upgrading or downgrading through item replacements for subscription orders
+-  Switching subscription product quantity in the admin panel
 
 ### For Customers
 -	Customers can view and cancel their subscriptions from their dashboard
