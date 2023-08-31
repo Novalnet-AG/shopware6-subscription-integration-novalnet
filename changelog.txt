@@ -1,6 +1,6 @@
 *** Changelog ***
 
-= 2.0.0    - 29.08.2023
+= 2.0.0    - 31.08.2023
 * New      - Implemented Change payment method option
 * New      - Implemented Upgrade or Downgrade for Subscription products
 * Enhanced - Optimised the Subscription product variant settings
