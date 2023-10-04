@@ -6,6 +6,7 @@ Once subscription payment mode is applied to a product/service, the customer can
 
 ### For Shop Admins
 -	Create and manage subscription plans
+-	Subscription management support via Admin API 
 -  Configure subscription plans to one or more product(s)
 -	Manage customers’ subscription profiles
 -	Manual subscription cancellation from the admin panel 
@@ -42,7 +43,7 @@ For detailed documentation and other technical inquiries, please send us an emai
 
 Shopware 6 Subscription plugin is compatible with below technical capabilities. 
 
-- [x]	Shopware versions 6.5.0.0 to Shopware 6.5.5.1
+- [x]	Shopware versions 6.5.0.0 to Shopware 6.5.5.2
 - [x]	Linux based OS with Apache 2.2 or 2.4
 - [x]	PHP 7.2.0 or higher
 - [x]	MySQL 5.7 or higher
