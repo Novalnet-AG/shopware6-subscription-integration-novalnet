@@ -1,4 +1,6 @@
 *** Changelog ***
+= 2.2.0    - 13.10.2023
+* New      - Implemented discount type for a particular subscription period while using multiple subscriptions
 
 = 2.1.0    - 04.10.2023
 * New      - Subscription management support via Admin API
