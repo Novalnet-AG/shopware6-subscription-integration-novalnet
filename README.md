@@ -15,6 +15,7 @@ Once subscription payment mode is applied to a product/service, the customer can
 -	Handled changing payment methods in the admin panel
 -  Subscription upgrading or downgrading through item replacements for subscription orders
 -  Switching subscription product quantity in the admin panel
+-  Implemented discount type for particular subscription period while using multiple subscriptions
 
 ### For Customers
 -	Customers can view and cancel their subscriptions from their dashboard
@@ -43,7 +44,7 @@ For detailed documentation and other technical inquiries, please send us an emai
 
 Shopware 6 Subscription plugin is compatible with below technical capabilities. 
 
-- [x]	Shopware versions 6.5.0.0 to Shopware 6.5.5.2
+- [x]	Shopware versions 6.5.0.0 to Shopware 6.5.6.0
 - [x]	Linux based OS with Apache 2.2 or 2.4
 - [x]	PHP 7.2.0 or higher
 - [x]	MySQL 5.7 or higher
