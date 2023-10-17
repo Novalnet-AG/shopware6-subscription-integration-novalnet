@@ -1,10 +1,13 @@
 *** Changelog ***
+= 2.2.1    - 17.10.2023
+* Fix      - Fetching proper product ID to process orders with subscription products
+
 = 2.2.0    - 13.10.2023
 * New      - Implemented discount type for a particular subscription period while using multiple subscriptions
 
 = 2.1.0    - 04.10.2023
 * New      - Subscription management support via Admin API
-* New      - Allowing end users to update the product and quantity under My Subscription using "Edit Product" option
+* New      - Allowing end users to update the product and quantity under My Subscription using the "Edit Product" option
 * Fix      - Shopping cart button disabled for Multi subscription settings
 
 = 2.0.1    - 07.09.2023
