@@ -1,0 +1,34 @@
+{% block novalnet_subscription_product_discount_delete %}
+    <sw-modal :title="$tc('novalnet-subscription.settingForm.warning')"
+              @modal-close="closeModal">
+		
+			{% block novalnet_subscription_product_discount_delete_content %}
+				<template #default>
+
+					{% block novalnet_subscription_product_discount_delete_info_text %}
+						<sw-container columns="1fr" gap="0px 30px">
+							{{ $tc('novalnet-subscription.settingForm.productSettings.discountDelete') }} 
+					    </sw-container>
+						
+					{% endblock %}
+				</template>
+			{% endblock %}
+
+			{% block novalnet_subscription_product_discount_delete_actions %}
+				<template #modal-footer>
+
+					{% block novalnet_subscription_product_discount_delete_cancel %}
+						<sw-button secondary slim variant="primary" @click="onDiscountCancel" >
+							{{ $tc('novalnet-subscription.list.buttonCancel') }}
+						</sw-button>
+					{% endblock %}
+					
+					{% block novalnet_subscription_product_discount_setting_confirm %}
+						<sw-button secondary slim variant="primary" @click="onDiscountDelete" >
+							{{ $tc('novalnet-subscription.list.buttonDelete') }}
+						</sw-button>
+					{% endblock %}
+				</template>
+			{% endblock %}
+    </sw-modal>
+{% endblock %}

@@ -1,0 +1,16 @@
+
+{% block sw_order_detail_details_custom_fields %}
+	{% parent %}
+    <sw-card
+        v-if="isSubscription"
+        position-identifier="sw-order-detail-details-subscription-fields"
+        :title="$tc('novalnet-subscription.detail.associateSubscription')"
+    >
+		<sw-container v-for="abo in abos" class="novalnet_associate_subscription" columns="1fr 1fr" gap="10px">
+			<sw-button :routerLink="{ name: 'novalnet.subsctiption.detail.base', params: { id: abo.novalnetSubscription.id } }">
+				{{ $tc('novalnet-subscription.detail.subscriptionButton', 0, { subsNumber: abo.novalnetSubscription.subsNumber }) }}
+			</sw-button>
+		</sw-container>
+    </sw-card>
+{% endblock %}
+

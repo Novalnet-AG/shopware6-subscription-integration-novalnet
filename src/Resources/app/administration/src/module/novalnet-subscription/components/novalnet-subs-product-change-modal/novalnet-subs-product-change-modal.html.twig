@@ -1,0 +1,57 @@
+<sw-modal :title="$tc('novalnet-subscription.detail.editProductTitle')"
+          @modal-close="closeModal">
+
+    {% block novalnet_sub_next_cycle_date_change_content %}
+		<template #default>
+	
+			{% block novalnet_subscription_product_change %}
+				<sw-container columns="1fr"
+							gap="0px 30px">
+					
+					<sw-single-select
+						v-if="showProductChange"
+						v-model="subscriptionProduct"
+						labelProperty="translated.name"
+						valueProperty="id"
+						:value="subscriptionProduct"
+						:label="$tc('novalnet-subscription.detail.productTitle')"
+						:options="products"
+						required
+						show-clearable-button
+						required
+						@change="onProductChange"
+					/>
+					
+					<sw-number-field 
+						numberType="int" 
+						:step="null" 
+						:min="0" 
+						:max="100" 
+						:allowEmpty="false"
+						v-model="quantity"
+						:label="$tc('novalnet-subscription.detail.productQuantity')"
+						/>
+				</sw-container>
+			{% endblock %}
+		</template>
+	{% endblock %}
+			
+    <template #modal-footer>
+        <sw-button @click="closeModal">
+            {{ $tc('novalnet-subscription.detail.abortButton') }}
+        </sw-button>
+        
+        <sw-button v-if="showProductChange" variant="primary" :disabled="disabled"
+                   @click="updateProduct">
+            {{ $tc('novalnet-subscription.detail.confirmButton') }}
+        </sw-button>
+        
+        <sw-button v-else variant="primary" :disabled="disabled"
+                   @click="updateProductQuantity">
+            {{ $tc('novalnet-subscription.detail.confirmButton') }}
+        </sw-button>
+        
+    </template>
+
+    <sw-loader v-if="isLoading"></sw-loader>
+</sw-modal>

@@ -1,0 +1,173 @@
+<sw-card-view v-if="!isLoading">
+
+    <sw-card v-if="abo.status == 'PENDING'">
+        <sw-icon name="regular-exclamation-triangle" color="#ff0000"></sw-icon>
+        {{ $tc('novalnet-subscription.detail.pendingNotice') }}
+    </sw-card>
+    
+    <sw-card v-if="subsCycle">
+        <sw-icon name="regular-exclamation-triangle" color="#ff0000"></sw-icon>
+        <span v-html="$tc('novalnet-subscription.detail.retryNotice', 0, { reason: subOrderStatus })"></span>
+    </sw-card>
+    
+    <sw-card v-if="onHold">
+        <sw-icon name="regular-exclamation-triangle" color="#ff0000"></sw-icon>
+        <span v-html="$tc('novalnet-subscription.detail.onholdNotice')"></span>
+    </sw-card>
+
+    <sw-card :title="$tc('novalnet-subscription.detail.cardTitle')" :isLoading="isLoading">
+        <sw-container columns="1fr 1fr">
+            <div class="novalnet-subscription-header">
+                {# Logo #}
+                {% block novalnet_subscription_order_header_info %}
+                    <div class="novalnet-subscription-header-logo" style="text-align: center !important;">
+                        <img class="novalnet-subscription-icon" alt="Novalnet"
+                             :src="'novalnetsubscription/static/img/plugin.png' | asset">
+                    </div>
+                {% endblock %}
+                {# Full name and E-Mail address #}
+                {% block novalnet_subscription_order_customer_info %}
+                    <div class="novalnet-subscription-buyer-info">
+
+                        {% block novalnet_subscription_order_number %}
+                            <div class="novalnet-subscription-order-number">
+                                {{ $tc('novalnet-subscription.detail.subscriptionNo') }} : {{ abo.subsNumber }}
+                            </div>
+                        {% endblock %}
+
+                        {% block novalnet_subscription_order_customer_info_email %}
+                            <div class="novalnet-subscription-state-select">
+                                <sw-select-field 
+                                        class="novalnet-subscription-select-status"
+                                        :disabled="!acl.can('novalnet_subscription.editor')"
+                                        placeholder="placeholder goes here..." 
+                                        :options="transitionOptions"
+                                        size="small"
+                                        v-model="selectedActionName"
+                                        @change="onStateChangeClicked">
+                                </sw-select-field>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+
+            <sw-container class="novalnet-subscription-amount-info" rows="4" columns="1fr">
+                {% block novalnet_subscription_order_amount %}
+                    <div class="novalnet-subscription-total-amount" style="text-align: right !important;">
+                        {{ abo.amount|currency(abo.order.currency.isoCode) }}
+                    </div>
+                {% endblock %}
+                {% block novalnet_subscription_order_date %}
+                    <div class="novalnet-subscription-created-date" style="text-align: right !important;">
+                        {{ abo.createdAt|date }}
+                    </div>
+                {% endblock %}
+            </sw-container>
+        </sw-container>
+        
+        <sw-container columns="repeat(auto-fit, minmax(250px, 1fr))" gap="30px 30px" class="novalnet-subscription-overview-details">
+
+            {% block novalnet_subscription_detail_overview_left_column %}
+                <sw-description-list columns="1fr" grid="1fr" class="sw-order-user-card__summary-vertical">
+                    {% block novalnet_subscription_detail_overview_interval %}
+							<dl><dt>{{ $tc('novalnet-subscription.detail.deliveryIntervalLabel') }}</dt>
+							<dd>{{ abo.interval }} {{ $tc('novalnet-subscription.intervals.' + abo.unit.toLowerCase()) }}</dd>
+							<dl><dt>{{ $tc('novalnet-subscription.detail.durationLabel') }}</dt>
+							<dd v-if="abo.length">{{ abo.interval * abo.length }} {{ $tc('novalnet-subscription.intervals.' + abo.unit.toLowerCase()) }}</dd>
+							<dd v-else>{{ $tc('novalnet-subscription.intervals.endlessSubscription') }}</dd>
+							<dl><dt>{{ $tc('novalnet-subscription.detail.freeTrialLabel') }}</dt>
+							<dd v-if="abo.trialInterval">{{ abo.trialInterval }} {{ $tc('novalnet-subscription.intervals.' + abo.trialUnit.toLowerCase()) }}</dd>
+							<dd v-else>NIL</dd>
+							<dl><dt v-if="abo.status == 'CANCELLED'">{{ $tc('novalnet-subscription.detail.cancelledAt') }}</dt>
+							<dd v-if="abo.status == 'CANCELLED'">{{ abo.cancelledAt | date }}</dd>
+							<dt v-if="abo.status == 'SUSPENDED'">{{ $tc('novalnet-subscription.detail.suspendedAt') }}</dt>
+							<dd v-if="abo.status == 'SUSPENDED'">{{ abo.terminationDate | date }}</dd>
+							<dt>{{ $tc('novalnet-subscription.detail.currentPaymentLabel') }}</dt>
+							<dd>{{ paymentName }}</dd>
+						</dl>
+                    {% endblock %}
+                </sw-description-list>
+                <sw-description-list columns="1fr" grid="1fr" class="sw-order-user-card__summary-vertical">
+                    {% block novalnet_subscription_detail_overview_next_debt %}
+                        <dl>
+							<dt>{{ $tc('novalnet-subscription.detail.nextDebt') }}</dt>
+							<dd>{{ abo.nextDate | date }} 
+								<sw-icon name="regular-pencil-s" v-if="showCycleDate && acl.can('novalnet_subscription.editor')" @click="showChangeNextCyle" small></sw-icon> 
+								 </dd>
+							<dt>{{ $tc('novalnet-subscription.detail.endingDate') }}</dt>
+							<dd v-if="abo.length">{{ abo.endingAt | date }}</dd>
+							<dd v-else>{{ $tc('novalnet-subscription.intervals.untilCanceled') }} <span v-if=""> </span></dd>
+							<dt>{{ $tc('novalnet-subscription.detail.lastExecutedLabel') }}</dt>
+							<dd>{{ abo.updatedAt | date }}</dd>
+							<dt v-if="abo.status == 'CANCELLED'">{{ $tc('novalnet-subscription.detail.cancelledReason') }}</dt>
+							<dd v-if="abo.status == 'CANCELLED'">{{ abo.cancelReason ? abo.cancelReason : 'NIL' }}</dd>
+							<dt v-if="abo.status == 'SUSPENDED'">{{ $tc('novalnet-subscription.detail.suspendedReason') }}</dt>
+							<dd v-if="abo.status == 'SUSPENDED'">{{ abo.cancelReason ? abo.cancelReason : 'NIL' }}</dd>
+						</dl>
+                    {% endblock %}
+                </sw-description-list>
+            {% endblock %}
+        </sw-container>
+        
+    </sw-card>
+    
+    <sw-user-card :title="$tc('novalnet-subscription.detail.customerLabel')" :user="abo.order.orderCustomer">
+        <template slot="actions">
+            <sw-button
+                :routerLink="{ name: 'sw.customer.detail', params: { id: abo.order.orderCustomer.customerId } }">
+                <sw-icon name="regular-user" small></sw-icon>
+                {{ $tc('novalnet-subscription.detail.cardTitle') }}
+            </sw-button>
+        </template>
+    </sw-user-card>
+    <sw-card :title="$tc('novalnet-subscription.detail.initialOrder')">
+        <sw-container columns="1fr 1fr" gap="10px">
+            <sw-button :routerLink="{ name: 'sw.order.detail', params: { id: abo.orderId } }">
+                {{ $tc('novalnet-subscription.detail.orderButton', 0, { orderNumber: abo.order.orderNumber }) }}
+            </sw-button>
+        </sw-container>
+    </sw-card>
+    <sw-card v-if="!ProductExits" :title="$tc('novalnet-subscription.detail.productLabel')">
+        <sw-order-line-items-grid :order="order"
+                                  :context="versionContext"
+                                  :editable="false">
+        </sw-order-line-items-grid>
+    </sw-card>
+    
+    <sw-card v-else :title="$tc('novalnet-subscription.detail.productLabel')">
+        <sw-data-grid
+			:data-source="productInfo"
+			:columns="getColumns"
+			:show-actions="false"
+			:show-selection="false"
+			>
+		</sw-data-grid>
+    </sw-card>
+    
+    <novalnet-subs-confirm-modal v-if="actionToConfirm !== ''"
+                                :actionToConfirm="actionToConfirm"
+                                :refundableAmount="0"
+                                :confirmButtonText="confirmButtonText"
+                                :customerId="customerId"
+                                :salesChannelId="salesChannelId"
+                                :aboId="aboId"
+                                :cancelReaonLabel="cancelReaonLabel"
+                                @modal-close="closeModal">
+    </novalnet-subs-confirm-modal>
+    
+    <novalnet-sub-next-cycle-date-change 
+								v-if="changeCycleDate"
+                                :abo="abo"
+                                :customerId="customerId"
+                                :salesChannelId="salesChannelId"
+                                :aboId="aboId"
+                                @modal-close="closeModal">
+    </novalnet-sub-next-cycle-date-change>
+    
+    {% block novalnet_subsctiption_content_card_loading %}
+        <sw-loader v-if="isLoading"></sw-loader>
+    {% endblock %}
+
+
+</sw-card-view>

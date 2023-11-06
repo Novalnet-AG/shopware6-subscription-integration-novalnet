@@ -1,0 +1,65 @@
+{% block novalnet_subscription_product_discount_setting %}
+    <sw-modal :title="$tc('novalnet-subscription.settingForm.discountTitle')"
+              @modal-close="closeModal">
+		
+			{% block novalnet_subscription_product_discount_setting_content %}
+				<template #default>
+
+					{% block novalnet_subscription_product_discount_setting_info_text %}
+						
+						<sw-container >
+								<sw-single-select v-model="cycle" 
+									labelProperty="name"
+									valueProperty="id"
+									:options="displayFieldOptions" 
+									:label="$tc('novalnet-subscription.settingForm.period')"
+									:allowEmpty="false"
+									required
+									>
+								</sw-single-select>
+							
+						</sw-container>
+						
+					    <sw-container >
+							<sw-single-select v-model="discountType"
+								labelProperty="name"
+								valueProperty="id"
+								:options="discountTypeOptions" 
+								:label="$tc('novalnet-subscription.settingForm.productSettings.discountTypeTitle')"
+								:allowEmpty="false"
+								required
+								@change="updateDiscountType">
+						    </sw-single-select>
+						</sw-container>
+						<sw-container >
+								<sw-field type="number" 
+									v-model ="discountValue"
+								   :label="$tc('novalnet-subscription.settingForm.productSettings.discountAmount')"
+								   :max="maxDiscountValue"
+								   :min="1"
+								   :allowEmpty="false"
+								   required
+								>
+								<template #suffix>
+									<span v-if="isPercentageType">%</span>
+									<span v-else>{{ maxValueSuffix }}</span>
+								</template>
+							</sw-field>
+							
+						</sw-container>
+					{% endblock %}
+				</template>
+			{% endblock %}
+
+			{% block novalnet_subscription_product_discount_setting_actions %}
+				<template #modal-footer>
+
+					{% block novalnet_subscription_product_discount_setting_confirm %}
+						<sw-button secondary slim variant="primary" @click="novalnetdiscount" >
+							{{ $tc('novalnet-subscription.settingForm.productSettings.addDiscountbutton') }}
+						</sw-button>
+					{% endblock %}
+				</template>
+			{% endblock %}
+    </sw-modal>
+{% endblock %}

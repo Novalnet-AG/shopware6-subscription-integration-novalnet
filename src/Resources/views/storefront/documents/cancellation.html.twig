@@ -1,0 +1,14 @@
+{% block cancellation_template_base %}
+	<div style="font-family:Arial, Helvetica, sans-serif; font-size:12px;">
+	Dear Merchant,
+	<br>
+	<br>
+	Subscription Number {{ abo.aboOrderNumber }} getting  on {{ abo.order.orderDateTime|format_datetime('medium', 'short', locale='en-GB') }}.<br>
+	<br>
+	
+    You can check the current status of your subscription on our website under "My subscription" - "My subscriptions" anytime: {{ rawUrl('frontend.novalnet.subscription.orders.detail', { 'aboId': abo.id }, salesChannel.domains|first.url) }}
+    <br>
+    <br>
+    If you have any questions, do not hesitate to contact us.
+	</div>
+{% endblock %}

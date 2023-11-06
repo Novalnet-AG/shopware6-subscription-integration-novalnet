@@ -1,0 +1,71 @@
+<div class="modal fade"
+	 id="suspendModalBox"
+	 tabindex="-1"
+	 role="dialog"
+	 aria-hidden="true">
+
+	{% block page_account_suspend_modal_dialog %}
+		<div class="modal-dialog modal-lg" role="dialog">
+			{% block page_account_suspend_modal_content %}
+				<div class="modal-content">
+					{% block page_account_suspend_modal_header %}
+						<div class="modal-header">
+							{% block page_account_suspend_modal_header_title %}
+								<h5 class="modal-title">{{ "NovalnetSubscription.text.suspendSubscription"|trans|sw_sanitize }}</h5>
+							{% endblock %}
+							{% block page_account_suspend_modal_header_close_button %}
+								<button class="btn-close close"
+										type="button"
+										data-bs-dismiss="modal"
+										aria-label="Close">
+								</button>
+							{% endblock %}
+						</div>
+					{% endblock %}
+
+					{% block page_account_suspend_modal_body %}
+						<form  action="{{ path('frontend.novalnet.subscription.suspended.cycle', {'aboId': abo.id}) }}" data-form-csrf-handler="true" method="post">
+							<div class="modal-body pb-0">
+								<div class="form-content">
+									<div class="row">
+										<div class="form-group col-md-12">
+											<label for="suspendCancelReason" style="font-weight: 700;">{{ "NovalnetSubscription.text.suspendReason"|trans|striptags }}</label>
+											<input type="text" id="suspendCancelReason" name="cancelReason" class="form-control" required="required" placeholder="{{ "NovalnetSubscription.text.dateReasonPlaceHolder"|trans|striptags }}">
+										</div>
+									</div>
+								</div>
+								<div class="form-hidden-fields">
+									<input type="hidden" id="customerId" name="customerId" value="{{ abo.customerId }}">
+								</div>
+							</div>
+					{% endblock %}
+
+					{% block page_account_suspend_modal_footer %}
+							<div class="modal-footer pt-0">
+								{% block page_account_suspend_modal_footer_form %}
+									<form action="{{ path('frontend.novalnet.subscription.active.cycle', {'aboId': abo.id}) }}" data-form-csrf-handler="true" method="post" style="float:right">
+										{% block page_checkout_aside_cancel_order_modal_header_back_button %}
+											<button class="btn btn-outline-secondary"
+													type="button"
+													data-bs-dismiss="modal">
+												{{ "NovalnetSubscription.text.closeButton"|trans|sw_sanitize }}
+											</button>
+										{% endblock %}
+
+										{% block page_account_suspend_modal_footer_form_button %}
+											<button type="submit"
+													class="btn btn-sm btn-primary">
+												{{ "NovalnetSubscription.text.confirmButton"|trans|sw_sanitize }}
+											</button>
+										{% endblock %}
+									</form>
+								{% endblock %}
+								
+							</div>
+						</form>
+					{% endblock %}
+				</div>
+			{% endblock %}
+		</div>
+	{% endblock %}
+</div>

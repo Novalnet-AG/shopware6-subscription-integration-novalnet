@@ -1,0 +1,18 @@
+<sw-modal :title="$tc('novalnet-subscription.detail.manualExecutionTitle')"
+          @modal-close="closeModal">
+
+    <p>{{ $tc('novalnet-subscription.detail.manualRecurringConfirm') }}</p>
+			
+    <template #modal-footer>
+        <sw-button @click="closeModal">
+            {{ $tc('novalnet-subscription.detail.abortButton') }}
+        </sw-button>
+
+        <sw-button variant="primary" :disabled="disabled"
+                   @click="confirm">
+            {{ $tc('novalnet-subscription.detail.manualButton') }}
+        </sw-button>
+    </template>
+
+    <sw-loader v-if="isLoading"></sw-loader>
+</sw-modal>

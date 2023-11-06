@@ -1,0 +1,14 @@
+{% block sw_order_detail_customer_comment_card %}
+    {% parent %}
+    <template v-if="!isLoading" :isLoading="isLoading">
+		<template v-if="isSubscription">
+			<sw-card :title="$tc('novalnet-subscription.detail.associateSubscription')">
+				<sw-container v-for="abo in abos" class="novalnet_associate_subscription" columns="1fr 1fr" gap="10px">
+					<sw-button :routerLink="{ name: 'novalnet.subsctiption.detail.base', params: { id: abo.novalnetSubscription.id } }">
+						{{ $tc('novalnet-subscription.detail.subscriptionButton', 0, { subsNumber: abo.novalnetSubscription.subsNumber }) }}
+					</sw-button>
+				</sw-container>
+			</sw-card>
+		</template>
+    </template>
+{% endblock %}

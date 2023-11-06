@@ -1,0 +1,225 @@
+{% block novalnet_subscription_overview_list %}
+	<sw-page class="sw-novalnet-subscription-orders-list">
+        
+        {% block novalnet_subscription_list_search_bar %}
+            <template #search-bar>
+                <sw-search-bar initialSearchType="novalnet_subscription"
+							   :initialSearch="term"
+							   @search="onSearch">
+                </sw-search-bar>
+            </template>
+        {% endblock %}
+        
+        {% block novalnet_subscription_overview_list_header %}
+            <template #smart-bar-header>
+                {% block novalnet_subscription_overview_list_header_title %}
+                    <h2>
+                        {% block novalnet_subscription_overview_list_header_title_text %}
+                            {{ $tc('novalnet-subscription.list.subsctiptionOrders') }}
+                        {% endblock %}
+
+                        {% block novalnet_subscription_overview_list_header_amount %}
+                            <span v-if="!isLoading" class="sw-page__smart-bar-amount">
+                                ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+        
+        {% block novalnet_subscription_overview_list_content %}
+			<template #content>
+				{% block novalnet_subscription_overview_list_grid %}
+					<div class="sw-product-list__content">
+
+						{% block novalnet_subcription_list_grid %}
+							<sw-data-grid :dataSource="subscriptions"
+                                          :columns="subscriptionColumns"
+                                          :fullPage="true"
+                                          :showSettings="true"
+                                          :showSelection="true"
+                                          :sortBy="sortBy"
+                                          :sortDirection="sortDirection"
+                                          :isLoading="isLoading"
+                                          :allowColumnEdit="true"
+                                          identifier="novalnet-subsctiption-overview"
+                                          @update-records="updateTotal"
+                                          @column-sort="onSortColumn"
+                                          @page-change="onPageChange"
+                                          @selection-change="updateSelection"
+                                          :disableDataFetching="true">
+                                          
+								{% block novalnet_subcription_list_grid_columns_active %}
+								{% endblock %}
+							
+								{% block novalnet_subcription_list_grid_columns %}
+									<template #column-Sno="{ item }">
+										{{ item.subsNumber }}
+									</template>
+									
+									<template #column-order.salesChannel.name="{ item }">
+										{{ item.order.salesChannel.name }}
+									</template>
+									
+									<template #column-order.orderCustomer.firstName="{ item }">
+										<router-link
+											:to="{ name: 'sw.customer.detail', params: { id: item.order.orderCustomer.customerId } }">
+											{{ item.order.orderCustomer.firstName }} {{ item.order.orderCustomer.lastName }}
+										</router-link>
+									</template>
+									<template #column-countItems="{ item }">
+										{{ item.order.lineItems.length }}
+									</template>
+									<template #column-amount="{ item }">
+										{{ item.amount | currency(item.order.currency.translated.shortName) }}
+									</template>
+									<template #column-status="{ item }">
+										<sw-label :variant="getVariantFromOrderState(item.status)" appearance="pill">
+											{{ $tc('novalnet-subscription.status.' + item.status.toLowerCase()) }}
+										</sw-label>
+									</template>
+									<template #column-interval="{ item }">
+										{{ item.interval }} {{ $tc('novalnet-subscription.intervals.' + item.unit.toLowerCase()) }}
+									</template>
+									<template #column-length="{ item }">
+										<div v-if="item.length">
+											{{ item.length }} {{ $tc('novalnet-subscription.intervals.' + item.unit.toLowerCase()) }}
+										</div>
+										<div v-else>
+											{{ $tc('novalnet-subscription.intervals.endlessSubscription') }}
+										</div> 
+									</template>
+									<template #column-endingAt="{ item }">
+										<div v-if="item.length">
+											{{ item.endingAt | date({hour: '2-digit', minute: '2-digit'}) }}
+										</div>
+										<div v-else>
+											{{ $tc('novalnet-subscription.intervals.untilCanceled') }}
+										</div> 
+									</template>
+									<template #column-createdAt="{ item }">
+										{{ item.createdAt | date({hour: '2-digit', minute: '2-digit'}) }}
+									</template>
+									<template #column-customer.customerNumber="{ item }">
+										<router-link :to="{ name: 'sw.customer.detail', params: { id: item.order.orderCustomer.customerId } }">
+											{{ item.order.orderCustomer.customerNumber }}
+										</router-link>
+									</template>
+								{% endblock %}
+								
+								{% block novalnet_subcription_list_grid_columns_actions %}
+									<template #actions="{ item }">
+                                        {% block novalnet_subcription_list_grid_columns_actions_view %}
+                                            <sw-context-menu-item class="novalnet-subscription-detail-view-action" :routerLink="{ name: 'novalnet.subsctiption.detail.base', params: { id: item.id } }">
+                                                {{ $tc('novalnet-subscription.list.contextMenuView') }}
+                                            </sw-context-menu-item>
+                                        {% endblock %}
+                                        {% block novalnet_subcription_list_grid_columns_actions_delete %}
+                                            <sw-context-menu-item
+                                                variant="danger"
+                                                :disabled="disableDeletion(item.order)"
+                                                @click="onDelete(item.id)">
+                                                {{ $tc('novalnet-subscription.list.contextMenuDelete') }}
+                                            </sw-context-menu-item>
+                                        {% endblock %}
+                                    </template>
+								{% endblock %}
+								
+								{% block novalnet_subcription_list_grid_action_modals %}
+									<template #action-modals="{ item }">
+										{% block novalnet_subcription_list_delete_modal %}
+											<sw-modal v-if="showDeleteModal === item.id"
+													  @modal-close="onCloseDeleteModal"
+													  :title="$tc('global.default.warning')"
+													  variant="small">
+												{% block novalnet_subcription_list_delete_modal_confirm_delete_text %}
+												<p class="novalnet-subcription-list__confirm-delete-text">
+													{{ $tc('novalnet-subscription.list.textDeleteConfirm', 0, { subsNumber: `${item.subsNumber}` }) }}
+												</p>
+												{% endblock %}
+
+												{% block novalnet_subcription_list_delete_modal_footer %}
+												<template #modal-footer>
+													{% block novalnet_subcription_list_delete_modal_cancel %}
+													<sw-button @click="onCloseDeleteModal" size="small">
+														{{ $tc('novalnet-subscription.list.buttonCancel') }}
+													</sw-button>
+													{% endblock %}
+
+													{% block novalnet_subcription_list_delete_modal_confirm %}
+													<sw-button @click="onConfirmDelete(item.id)" variant="danger" size="small">
+														{{ $tc('novalnet-subscription.list.buttonDelete') }}
+													</sw-button>
+													{% endblock %}
+												</template>
+												{% endblock %}
+											</sw-modal>
+										{% endblock %}
+									</template>
+                                {% endblock %}
+                                
+                                <template #pagination>
+                                    {% block sw_order_list_grid_pagination %}
+                                        <sw-pagination :page="page"
+                                                       :limit="limit"
+                                                       :total="total"
+                                                       :total-visible="7"
+                                                       @page-change="onPageChange">
+                                        </sw-pagination>
+                                    {% endblock %}
+                                </template>
+							</sw-data-grid>
+						{% endblock %}
+
+						{% block novalnet_subcription_list_empty_state %}
+						<sw-empty-state v-if="!isLoading && !total" :title="$tc('novalnet-subscription.list.messageEmpty')"></sw-empty-state>
+						{% endblock %}
+
+						{% block novalnet_subcription_list_grid_loader %}
+						<sw-loader v-if="isLoading"></sw-loader>
+						{% endblock %}
+					</div>
+				{% endblock %}
+			</template>
+        {% endblock %}
+        
+        {% block novalnet_subcription_list_sidebar %}
+			<template #sidebar>
+				<sw-sidebar class="novalnet-subcription-list__sidebar">
+					{% block novalnet_subcription_list_sidebar_refresh %}
+					<sw-sidebar-item
+						icon="regular-undo"
+						:title="$tc('sw-product.list.titleSidebarItemRefresh')"
+						@click="onRefresh">
+					</sw-sidebar-item>
+					{% endblock %}
+
+					{% block novalnet_subcription_list_sidebar_filter %}
+						<sw-sidebar-item icon="regular-filter"
+										 :title="$tc('sw-customer.list.titleSidebarItemFilter')">
+
+							{% block novalnet_subcription_list_sidebar_filter_items %}
+
+								{% block novalnet_subcription_list_sidebar_filter_status %}
+									<sw-multi-select
+										:label="$tc('novalnet-subscription.list.status')"
+										:options="availableStatus"
+										:isLoading="filterLoading"
+										valueProperty="key"
+										labelProperty="translated"
+										:value="statusFilter"
+										@change="onChangeStatusFilter">
+									</sw-multi-select>
+								{% endblock %}
+
+							{% endblock %}
+
+						</sw-sidebar-item>
+					{% endblock %}
+				</sw-sidebar>
+			</template>
+		{% endblock %}
+    
+    </sw-page>
+{% endblock %}

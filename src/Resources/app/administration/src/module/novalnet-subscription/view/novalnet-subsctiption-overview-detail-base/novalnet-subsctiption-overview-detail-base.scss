@@ -1,0 +1,87 @@
+@import "~scss/variables";
+
+$sw-order-state-card-neutral: $color-darkgray-200;
+$sw-order-state-card-progress: $color-shopware-brand-500;
+$sw-order-state-card-danger: $color-crimson-500;
+$sw-order-state-card-success: $color-emerald-500;
+
+.novalnet-subscription-header {
+    height: 80px;
+    width: 100%;
+    display: flex;
+}
+
+.novalnet-subscription-header-logo {
+    width: 80px;
+    background: rgb(249, 250, 251);
+    border-radius: 4px;
+    border: 1px solid rgb(209, 217, 224);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.novalnet-subscription-buyer-info {
+    margin-top: 16px;
+    margin-left: 24px;
+}
+
+.novalnet-subscription-order-number {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.novalnet-subscription-order-status {
+    font-size: 14px;
+}
+
+.novalnet-subscription-total-amount {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 26px;
+    margin-top: 16px;
+}
+
+.novalnet-subscription-created-date {
+    margin-right: 26px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.novalnet-subscription-status-select {
+    border-radius: 15px;
+}
+
+.novalnet-subscription-state-select {
+    padding-bottom: 21px;
+    margin-top: 8px;
+    margin-right: 10px;
+
+    .sw-block-field__block {
+        border-radius: 15px;
+    }
+}
+
+.novalnet-subscription-overview-details {
+	padding-top: 25px;
+}
+
+.sw-order-user-card__summary-vertical {
+        line-height: 15px;
+
+        dt,
+        dd {
+            padding: 4px;
+            border-bottom: none;
+        }
+
+        dt {
+            font-weight: 600;
+
+            &:not(:first-child),
+            &:only-of-type {
+                padding-top: 21px;
+            }
+        }
+    }

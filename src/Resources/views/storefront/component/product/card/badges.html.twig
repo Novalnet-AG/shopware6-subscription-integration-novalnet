@@ -1,0 +1,22 @@
+{% sw_extends '@Storefront/storefront/component/product/card/badges.html.twig' %}
+
+{% block component_product_badges %}
+	
+	{% if product.parentId and product.extensions.novalnetConfiguration is null %}
+		{% set extensions = product.parentId|getParentProduct %}
+	{% else %}
+		{% set extensions = product.extensions %}
+	{% endif %}
+	
+	{%if extensions.novalnetConfiguration is not null and extensions.novalnetConfiguration.active is not empty %}
+		<div class="product-badges">
+			{% block component_product_badges_subscription %}
+				<div>
+					<span class="badge bg-warning"> {{ "NovalnetSubscription.text.subscriptionBadge"|trans|sw_sanitize }}</span>
+				</div>
+			{% endblock %}
+		</div>
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

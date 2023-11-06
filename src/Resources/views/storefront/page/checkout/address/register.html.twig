@@ -1,0 +1,20 @@
+{% sw_extends '@Storefront/storefront/page/checkout/address/register.html.twig' %}
+
+{% block component_account_register_form_action %}
+    {% if isAboCheckout is not defined %}
+        {{ parent() }}
+    {% else %}
+        <input type="hidden"
+               name="errorRoute"
+               value="frontend.bucs.abo.commerce.checkout.register.page"/>
+        <input type="hidden"
+               name="errorParameters"
+               value="{{ errorParameters }}">
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_register_personal_guest %}
+    {% if isAboCheckout is not defined %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

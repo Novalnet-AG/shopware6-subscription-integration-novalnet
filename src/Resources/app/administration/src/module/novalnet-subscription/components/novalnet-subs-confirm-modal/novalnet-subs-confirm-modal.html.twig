@@ -1,0 +1,39 @@
+<sw-modal :title="confirmButtonText"
+          @modal-close="closeModal">
+
+    <p>{{ $tc('novalnet-subscription.detail.actionConfirm') }}</p>
+	
+	{% block novalnet_subscription_cancel_modal_content %}
+		<template #default v-if="actionToConfirm !== 'activeAbo'">
+
+			{% block novalnet_payment_order_refund_modal_content_info_text %}
+				<sw-container columns="1fr"
+							gap="0px 30px">
+					
+					<sw-text-field v-model="cancelReason"
+								:allowEmpty="false"
+								:label="cancelReaonLabel"
+								required="required">
+					</sw-text-field>
+				</sw-container>
+			{% endblock %}
+		</template>
+	{% endblock %}
+			
+    <template #modal-footer>
+        <sw-button @click="closeModal">
+            {{ $tc('novalnet-subscription.detail.abortButton') }}
+        </sw-button>
+
+        <sw-button v-if="actionToConfirm == 'activeAbo'" variant="primary" :disabled="disabled"
+                   @click="confirm">
+            {{ confirmButtonText }}
+        </sw-button>
+        <sw-button v-else variant="danger" :disabled="disabled"
+                   @click="confirm">
+            {{ confirmButtonText }}
+        </sw-button>
+    </template>
+
+    <sw-loader v-if="isLoading"></sw-loader>
+</sw-modal>

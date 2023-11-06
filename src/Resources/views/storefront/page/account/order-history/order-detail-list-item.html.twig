@@ -1,0 +1,18 @@
+{% sw_extends '@Storefront/storefront/page/account/order-history/order-detail-list-item.html.twig' %}
+
+
+{% block page_account_order_item_detail_image_value %}
+	{{ parent() }}
+	{% set subscriptions = order.extensions.novalnetSubscription %}
+	
+	{% for subscription in subscriptions %}
+		{% if lineItem.id == subscription.lineItemId %}
+			<div class="product-badges" style="top: 23px;left: -24px;">
+				<div>
+					<span class="badge-subscription badge bg-warning" style="width: 58px;"> 
+					{{ "NovalnetSubscription.text.subscriptionBadge"|trans|sw_sanitize }}</span>
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}

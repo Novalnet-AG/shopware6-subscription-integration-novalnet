@@ -1,0 +1,58 @@
+{% sw_extends '@Storefront/storefront/component/checkout/offcanvas-item.html.twig' %}
+            
+{% block component_offcanvas_product_image_inner %}
+	{{ parent() }}
+	{% set novalnetConfiguration = page.cart.extensions.novalnetConfiguration %}
+	{% if novalnetConfiguration is not null %}
+		{% for key, value in novalnetConfiguration.all %}
+			{% set lineItemId = key|replace({"_": ""}) %}
+			{% if lineItemId == lineItem.id %}
+				<div class="product-badges product-subscription-badges">
+					<div>
+						<span class="badge badge-warning badge-subscription">{{ "NovalnetSubscription.text.subscriptionBadge"|trans|sw_sanitize }}</span>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+{% endblock %}
+
+{% block component_offcanvas_product_remove_form %}
+
+	{% set novalnetConfiguration = page.cart.extensions.novalnetConfiguration %}
+	{% if novalnetConfiguration is not null %}
+		{% if lineItem.extensions.novalnetConfiguration is not null %}
+			{% if lineItem.removable %}
+                <form action="{{ path('frontend.novalnet.subscription.line-item.delete', {'id': id}) }}"
+					  class="cart-item-remove js-offcanvas-cart-remove-product"
+                      method="post">
+
+                    {% block page_checkout_item_remove_form_csrf %}
+                        {{ sw_csrf('frontend.novalnet.subscription.line-item.delete') }}
+                    {% endblock %}
+
+                    {% block page_checkout_item_remove_redirect %}
+                        <input type="hidden"
+                               name="redirectTo"
+                               value="frontend.cart.offcanvas">
+                    {% endblock %}
+
+                    {% block page_checkout_item_remove_submit %}
+                        <button type="submit"
+                                title="{{ "checkout.removeLineItem"|trans|striptags }}"
+                                data-product-id="{{ lineItem.id }}"
+                                class="btn btn-light btn-sm cart-item-remove-button">
+                            {% sw_icon 'x' style { 'size': 'sm' } %}
+                        </button>
+                    {% endblock %}
+
+                </form>
+            {% endif %}
+		{% else %}
+			{{ parent() }}
+		{% endif %}
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+
+{% endblock %}

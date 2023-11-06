@@ -1,0 +1,10 @@
+{% sw_extends '@Storefront/storefront/page/account/sidebar.html.twig' %}
+
+{% block page_account_sidebar_menu_inner %}
+    {{ parent() }}
+    <a href="{{ path('frontend.novalnet.subscription.orders') }}"
+       title="{{ "NovalnetSubscription.text.subscriptionLabel"|trans|sw_sanitize }}"
+       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.novalnet.subscription.orders') %} is-active{% endif %}">
+        {{ "NovalnetSubscription.text.subscriptionLabel"|trans|sw_sanitize }}
+    </a>
+{% endblock %}

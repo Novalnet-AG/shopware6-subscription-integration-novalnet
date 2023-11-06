@@ -1,0 +1,170 @@
+{% sw_extends '@Storefront/storefront/component/line-item/type/product.html.twig' %}
+
+{% block component_line_item_type_product_order_number %}
+{{ parent() }}
+	{% if config('core.cart.wishlistEnabled') is empty and config('core.cart.showDeliveryTime') is empty %}
+		{% set novalnetConfiguration = page.cart.extensions.novalnetConfiguration %}
+		{% if novalnetConfiguration is not null %}
+			{% for key, value in novalnetConfiguration.all %}
+				{% set lineItemId = key|replace({"_": ""}) %}
+				{% if lineItemId == lineItem.id %}
+					{% set deliveryRemaining = (value.subscriptionLength / value.interval) %}
+						<div class="checkout-novalnet-subscription-title">
+							{% if lineItem.price.unitPrice is not empty %}
+								{% set totalAmount = lineItem.price.unitPrice * lineItem.quantity %}
+							{% else %}
+								{% set totalAmount = lineItem.price.totalPrice * lineItem.quantity %}
+							{% endif %}
+							<div class="line-item-label">
+								{% if value.interval == value.subscriptionLength %} 
+									{% set interval = '' %} 
+								{% elseif value.interval == 1 %} 
+									{% set interval = "NovalnetSubscription.text.single"|trans({'%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize})|sw_sanitize %} 
+								{% else %} 
+									{% set interval = "NovalnetSubscription.text.every"|trans({'%interval%': value.interval, '%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize})|sw_sanitize %} 
+								{% endif %}
+								
+								{{ "NovalnetSubscription.text.productDetailPageText"|trans({
+									'%amount%': totalAmount|currency,
+									'%interval%': interval
+								})|sw_sanitize }}
+								{% if value.subscriptionLength == 0 %}
+									{{ "NovalnetSubscription.text.productDetailPageUnlimited"|trans|sw_sanitize }}
+								{% else %}
+									{{ "NovalnetSubscription.text.productDetailPageLength"|trans({
+										'%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize,
+										'%length%': value.subscriptionLength
+									})|sw_sanitize }}
+								{% endif %}
+								{% if value.freeTrial != 0 %}
+									{{ "NovalnetSubscription.text.productPageWithFreeTrial"|trans({
+										'%freeTrial%': value.freeTrial,
+										'%freeTrialPeriod%': "NovalnetSubscription.text.#{value.freeTrialPeriod|lower}"|trans|sw_sanitize,
+									})|sw_sanitize }}
+								{% endif %}
+								{% if value.signUpFee != 0 %}
+									{{ "NovalnetSubscription.text.productPageWithSignupFee"|trans({
+										'%signupFee%': (value.signUpFee * lineItem.quantity * context.currency.factor)|currency
+									})|sw_sanitize }}
+								{% endif %}
+							</div>
+						</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+ {% block component_line_item_type_product_delivery_date %}
+	{{ parent() }}
+	
+	{% if config('core.cart.wishlistEnabled') is empty and config('core.cart.showDeliveryTime') %}
+		{% set novalnetConfiguration = page.cart.extensions.novalnetConfiguration %}
+		{% if novalnetConfiguration is not null %}
+			{% for key, value in novalnetConfiguration.all %}
+				{% set lineItemId = key|replace({"_": ""}) %}
+				{% if lineItemId == lineItem.id %}
+					{% set deliveryRemaining = (value.subscriptionLength / value.interval) %}
+						<div class="checkout-novalnet-subscription-title">
+							{% if lineItem.price.unitPrice is not empty %}
+								{% set totalAmount = lineItem.price.unitPrice * lineItem.quantity %}
+							{% else %}
+								{% set totalAmount = lineItem.price.totalPrice * lineItem.quantity %}
+							{% endif %}
+							<span class="line-item-label">
+								{% if value.interval == value.subscriptionLength %} 
+									{% set interval = '' %} 
+								{% elseif value.interval == 1 %} 
+									{% set interval = "NovalnetSubscription.text.single"|trans({'%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize})|sw_sanitize %} 
+								{% else %} 
+									{% set interval = "NovalnetSubscription.text.every"|trans({'%interval%': value.interval, '%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize})|sw_sanitize %} 
+								{% endif %}
+								
+								{{ "NovalnetSubscription.text.productDetailPageText"|trans({
+									'%amount%': totalAmount|currency,
+									'%interval%': interval
+								})|sw_sanitize }}
+								{% if value.subscriptionLength == 0 %}
+									{{ "NovalnetSubscription.text.productDetailPageUnlimited"|trans|sw_sanitize }}
+								{% else %}
+									{{ "NovalnetSubscription.text.productDetailPageLength"|trans({
+										'%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize,
+										'%length%': value.subscriptionLength
+									})|sw_sanitize }}
+								{% endif %}
+								{% if value.freeTrial != 0 %}
+									{{ "NovalnetSubscription.text.productPageWithFreeTrial"|trans({
+										'%freeTrial%': value.freeTrial,
+										'%freeTrialPeriod%': "NovalnetSubscription.text.#{value.freeTrialPeriod|lower}"|trans|sw_sanitize,
+									})|sw_sanitize }}
+								{% endif %}
+								{% if value.signUpFee != 0 %}
+									{{ "NovalnetSubscription.text.productPageWithSignupFee"|trans({
+										'%signupFee%': (value.signUpFee * lineItem.quantity * context.currency.factor)|currency
+									})|sw_sanitize }}
+								{% endif %}
+							</span>
+						</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+
+{% block component_line_item_type_product_wishlist %}
+	{{ parent() }}
+	
+	{% if config('core.cart.wishlistEnabled') %}
+		{% set novalnetConfiguration = page.cart.extensions.novalnetConfiguration %}
+		{% if novalnetConfiguration is not null %}
+			{% for key, value in novalnetConfiguration.all %}
+				{% set lineItemId = key|replace({"_": ""}) %}
+				{% if lineItemId == lineItem.id %}
+					{% set deliveryRemaining = (value.subscriptionLength / value.interval) %}
+						<div class="checkout-novalnet-subscription-title">
+							{% if lineItem.price.unitPrice is not empty %}
+								{% set totalAmount = lineItem.price.unitPrice * lineItem.quantity %}
+							{% else %}
+								{% set totalAmount = lineItem.price.totalPrice * lineItem.quantity %}
+							{% endif %}
+							<span class="line-item-label">
+								{% if value.interval == value.subscriptionLength %} 
+									{% set interval = '' %} 
+								{% elseif value.interval == 1 %} 
+									{% set interval = "NovalnetSubscription.text.single"|trans({'%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize})|sw_sanitize %} 
+								{% else %} 
+									{% set interval = "NovalnetSubscription.text.every"|trans({'%interval%': value.interval, '%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize})|sw_sanitize %} 
+								{% endif %}
+								
+								{{ "NovalnetSubscription.text.productDetailPageText"|trans({
+									'%amount%': totalAmount|currency,
+									'%interval%': interval
+								})|sw_sanitize }}
+								{% if value.subscriptionLength == 0 %}
+									{{ "NovalnetSubscription.text.productDetailPageUnlimited"|trans|sw_sanitize }}
+								{% else %}
+									{{ "NovalnetSubscription.text.productDetailPageLength"|trans({
+										'%period%': "NovalnetSubscription.text.#{value.period|lower}"|trans|sw_sanitize,
+										'%length%': value.subscriptionLength
+									})|sw_sanitize }}
+								{% endif %}
+								{% if value.freeTrial != 0 %}
+									{{ "NovalnetSubscription.text.productPageWithFreeTrial"|trans({
+										'%freeTrial%': value.freeTrial,
+										'%freeTrialPeriod%': "NovalnetSubscription.text.#{value.freeTrialPeriod|lower}"|trans|sw_sanitize,
+									})|sw_sanitize }}
+								{% endif %}
+								{% if value.signUpFee != 0 %}
+									{{ "NovalnetSubscription.text.productPageWithSignupFee"|trans({
+										'%signupFee%': (value.signUpFee * lineItem.quantity * context.currency.factor)|currency
+									})|sw_sanitize }}
+								{% endif %}
+							</span>
+						</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endif %}
+	
+{% endblock %}

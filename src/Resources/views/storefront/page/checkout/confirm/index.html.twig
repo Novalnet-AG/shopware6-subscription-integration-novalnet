@@ -1,0 +1,35 @@
+{% sw_extends '@Storefront/storefront/page/checkout/confirm/index.html.twig' %}
+
+{% block page_checkout_confirm_header %}
+	{% if page.cart.extensions.novalnetConfiguration is not null and page.cart.extensions.novalnetConfiguration.all is not null and page.cart.extensions.novalnetConfiguration.all is not empty %}
+		<div class="alert mb-4 alert-info p-2 text-white">
+			{{ "NovalnetSubscription.text.subscriptionInfoCheckout"|trans|sw_sanitize }}
+		</div>
+	{% endif %}
+    {{ parent() }}
+{% endblock %}
+
+{% block page_checkout_aside_actions %}
+	{% set novalnetConfiguration = page.cart.extensions.novalnetConfiguration %}
+	{% if novalnetConfiguration is not null and novalnetConfiguration.all is not null and novalnetConfiguration.all is not empty %}
+		{% set textOptions = {
+			confirmButtonText: "NovalnetSubscription.text.checkoutLoadingText"|trans|sw_sanitize
+		} %}
+		<div class="checkout-aside-action">
+			<form id="confirmOrderForm"
+				  action="{{ path('frontend.novalnet.subscription.checkout.finish.order', {cartId: page.cart.token}) }}"
+				  data-form-csrf-handler="true"
+				  data-form-preserver="true"
+				  data-form-submit-loader="true"
+				  data-submit-loader-text-options="{{ textOptions|json_encode }}"
+				  method="post">
+
+				{% block page_checkout_confirm_form_submit %}
+					{{ parent() }}
+				{% endblock %}
+			</form>
+		</div>
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

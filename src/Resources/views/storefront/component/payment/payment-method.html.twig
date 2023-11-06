@@ -1,0 +1,9 @@
+{% sw_extends '@Storefront/storefront/component/payment/payment-method.html.twig' %}
+
+{% block component_payment_method_field %}
+{% set novalnetConfiguration = ( page.cart.extensions.novalnetConfiguration.all ? page.cart.extensions.novalnetConfiguration.all : (page.order.extensions.novalnetSubscription.id or page.order.extensions.subsOrders.id)) %}
+	{% if payment.id not in config('NovalnetSubscription.config.supportedPayments') and novalnetConfiguration is not empty %}	
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

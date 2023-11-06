@@ -1,0 +1,44 @@
+{% sw_extends '@Storefront/storefront/component/payment/payment-fields.html.twig' %}
+
+
+{% block component_payment_method %}
+	{% set novalnetConfiguration = ( page.cart.extensions.novalnetConfiguration.all ? page.cart.extensions.novalnetConfiguration.all : (page.order.extensions.novalnetSubscription.id or page.order.extensions.subsOrders.id)) %}
+	
+	{% for payment in page.paymentMethods[:visiblePaymentMethodsLimit] %}
+		{% if payment.id not in config('NovalnetSubscription.config.supportedPayments') and (novalnetConfiguration is not empty || app.request.get('_route') == 'frontend.novalnet.subscription.orders.detail') %}	
+		{% else %}
+                {% sw_include '@Storefront/storefront/component/payment/payment-method.html.twig' %}
+		{% endif %}
+    {% endfor %}
+	
+	{% block component_payment_method_collapse %}
+                {% if page.paymentMethods | length > visiblePaymentMethodsLimit and visiblePaymentMethodsLimit is not same as(null) %}
+                    <div class="collapse">
+                        {% for payment in page.paymentMethods[visiblePaymentMethodsLimit:] %}
+                            {% sw_include '@Storefront/storefront/component/payment/payment-method.html.twig' %}
+                        {% endfor %}
+                    </div>
+
+                    {% block component_payment_method_collapse_trigger %}
+                        <div class="btn btn-link confirm-checkout-collapse-trigger"
+                             data-collapse-checkout-confirm-methods="true"
+                             data-collapse-checkout-confirm-methods-options='{{ collapseTriggerLabels|json_encode }}'>
+                            <span class="confirm-checkout-collapse-trigger-label">
+                                {% block component_payment_method_collapse_trigger_label %}
+                                    {{ collapseTriggerLabels.collapseTriggerMoreLabel }}
+                                {% endblock %}
+                            </span>
+                            {% block component_payment_method_collapse_trigger_icon %}
+                                {% sw_icon 'arrow-down' style {
+                                    'class': 'confirm-checkout-chevron',
+                                    'size': 'xs',
+                                    'pack' : 'solid'
+                                } %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+	
+{% endblock %}
+   
