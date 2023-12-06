@@ -16,6 +16,7 @@ Once subscription payment mode is applied to a product/service, the customer can
 -  Subscription upgrading or downgrading through item replacements for subscription orders
 -  Switching subscription product quantity in the admin panel
 -  Implemented discount type for particular subscription period while using multiple subscriptions
+-  Introducing dynamic group products for multiple subscription option
 
 ### For Customers
 -	Customers can view and cancel their subscriptions from their dashboard
