@@ -1,5 +1,12 @@
 *** Changelog ***
 
+= 2.2.3    - 15.02.2024
+* Fix      -  Removed session handling during recurring Process and Administration processes
+* Fix      - Handled the guest user to login user in the checkout for the subscription product
+* Fix      - Automatic status change upon clicking the order reference on the subscription detail page within the admin panel
+* Enhanced - Repeat order button for subscription products is hidden
+* Enhanced - For the subscription reactivation, the next cycle dates are adjusted
+
 = 2.2.2    - 06.12.2023
 * New	   - Introducing dynamic group products for multiple subscription option
 * New	   - Restricted order placing for registered customers who have active subscriptions
