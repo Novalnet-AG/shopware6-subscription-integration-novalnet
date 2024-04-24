@@ -1,8 +1,0 @@
-{% block sw_product_detail_content_tabs_layout %}
-
-    {% parent %}
-    
-    <sw-tabs-item v-if="acl.can('novalnet_subscription_product.viewer')" :route="{ name: 'sw.product.detail.novalnet.subscription', params: { id: $route.params.id } }"  :title="$tc('novalnet-subscription.subscriptionSettings.cardTitle')">
-        {{ $tc('novalnet-subscription.label') }}
-    </sw-tabs-item>
-{% endblock %}
