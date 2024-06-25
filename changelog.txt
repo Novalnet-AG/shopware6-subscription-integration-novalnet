@@ -1,5 +1,8 @@
 *** Changelog ***
 
+= 2.3.1    - 10.05.2024
+* Fix      - Novalnet Subscription plugin has been optimized for new testcase       
+
 = 2.3.0    - 24.04.2024
 * Fix      - Compatibility for Shopware 6.6 series
 * Fix      - Next cycle date was not updated properly when changing the payments from failure to success in recurring orders
