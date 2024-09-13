@@ -1,5 +1,8 @@
 *** Changelog ***
 
+= 2.3.3    - 13.09.2024
+* Enhanced - Novalnet Subscription plugin has been optimized for new testcase
+
 = 2.3.2    - 22.07.2024
 * Fix      - Restoring admin panel search bar functionality after plugin activation
 
