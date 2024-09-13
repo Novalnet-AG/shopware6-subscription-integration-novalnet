@@ -52,7 +52,7 @@ Shopware 6 Subscription plugin is compatible with below technical capabilities.
 
 ## Quick Installation via plugin upload
 
-1. **Download** the plugin from <a href="https://store.shopware.com/en/noval70530930939/subscriptions.html"> here</a> or <a href="https://www.novalnet.de/kontakt/sales"> contact us</a>.
+1. **Download** the plugin from <a href="[https://store.shopware.com/en/noval70530930939/subscriptions.html](https://store.shopware.com/en/noval70530930939m12/novalnet-subscriptions-for-shopware-6.html)"> here</a> or <a href="https://www.novalnet.de/kontakt/sales"> contact us</a>.
 
 1. **Login** to shop backend, move to:
    - Extensions
