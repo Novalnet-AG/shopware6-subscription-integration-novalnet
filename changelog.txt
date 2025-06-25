@@ -1,5 +1,8 @@
 *** Changelog ***
 
+= 2.4.0    - 25.06.2025
+* Fix      - Compatibility for Shopware 6.7 series
+
 = 2.3.3    - 13.09.2024
 * Enhanced - Novalnet Subscription plugin has been optimized for new testcase
 
