@@ -1,5 +1,8 @@
 *** Changelog ***
 
+= 2.4.1    - 22.08.2025
+* Fix      - Optimised checkout workflow to maintain subscription data integrity and accuracy end-to-end
+
 = 2.4.0    - 25.06.2025
 * Fix      - Compatibility for Shopware 6.7 series
 
@@ -78,3 +81,4 @@
 
 = 1.0.0   - 12.07.2022
 * Initial relase
+
