@@ -1,5 +1,11 @@
 *** Changelog ***
 
+= 2.4.2    - 29.09.2025
+* Fix      - Resolved amount mismatch for different currencies in subscription listing and detail pages
+* Fix      - Corrected checkout button behaviour for the shop’s default payment method 
+* Fix      - Prevented duplicate entries in subscriptions when using dynamic subscription groups
+* Enhanced - Added page content to subscription listing and detail pages in the frontend for improved compatibility with third-party plugins
+
 = 2.4.1    - 22.08.2025
 * Fix      - Optimised checkout workflow to maintain subscription data integrity and accuracy end-to-end
 
@@ -81,4 +87,3 @@
 
 = 1.0.0   - 12.07.2022
 * Initial relase
-
