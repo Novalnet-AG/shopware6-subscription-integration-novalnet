@@ -1,7 +1,7 @@
 *** Changelog ***
 
 = 2.4.3    - 19.12.2025
-* Fix      - Subscription order status handling in the shop admin panel
+* Fix      - Subscription order status can now be adjusted manually in the shop admin panel
 
 = 2.4.2    - 29.09.2025
 * Fix      - Resolved amount mismatch for different currencies in subscription listing and detail pages
@@ -90,4 +90,5 @@
 
 = 1.0.0   - 12.07.2022
 * Initial relase
+
 
